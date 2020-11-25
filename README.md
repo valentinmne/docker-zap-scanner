@@ -26,6 +26,7 @@ Scan a list of URLS with Zap Scan
 ```
 git clone "https://github.com/valentinmne/docker-zap-scanner.git"
 cd docker-zap-git
+sudo chmod +x scanner.sh
 ```
 
 ## Execute the shell script :
