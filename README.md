@@ -13,7 +13,7 @@
 
 ## What for ?
 
-Scan a list of URLS with Zap Scan
+Scan a list of URLS with Zap Scan and Generatin an html report file
 
 
 ### Prerequisite
