@@ -10,7 +10,6 @@ LIGHTRED='\033[1;31m'
 if [ "$1" == "http" ]
 then
 baseurl="http://"
-echo "$1"
 else
 baseurl="https://"
 fi
@@ -20,7 +19,6 @@ then
 filename='urls.txt'
 else
 filename="$2"
-echo "$2"
 fi
 
 
@@ -29,7 +27,6 @@ then
 delivery='/var/www/html'
 else
 delivery="$3"
-echo "$3"
 fi
 
 
