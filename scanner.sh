@@ -7,40 +7,23 @@ LIGHTGREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 LIGHTRED='\033[1;31m'
 
-if [ "$1" == "http" ]
-then
-    baseurl="http://"
-else
-    baseurl="https://"
-fi
+scheme="${1:-http}://"
+filename="${2:-urls.txt}"
+delivery="${3:-./}"
 
-if [ "$2" == "" ]
-then
-    filename='urls.txt'
-else
-    filename="$2"
-fi
-
-
-if [ "$2" == "" ]
-then
-    delivery='/var/www/html'
-else
-    delivery="$3"
-fi
+echo "Using scheme=$scheme filename=$filename delivery=$3"
 
 while read line; do
-    # reading each line
     echo -e "${GREEN}Scanning $line${NOCOLOR}"
     echo -e "${YELLOW}Creating directory : $line/$(date +%Y-%m-%d)${NOCOLOR}"
     echo ""
     mkdir -p $delivery$line/$(date +%Y-%m-%d)
     cd $delivery$line/$(date +%Y-%m-%d)
     chmod 777 -R $delivery
-    docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -m 10 -t $baseurl$line  -g generated_file.conf -r shiny_report.html
+    docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -m 10 -t $scheme$line  -g generated_file.conf -r shiny_report.html
     echo ""
     echo -e "${YELLOW}The report is located at $(pwd)${NOCOLOR}"
     cd ../..
-    echo -e "${LIGHTGREEN}Scan of $baseurl$line Complete.${NOCOLOR}"
+    echo -e "${LIGHTGREEN}Scan of $scheme$line Complete.${NOCOLOR}"
     echo ""
 done < $filename
