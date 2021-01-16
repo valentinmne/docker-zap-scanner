@@ -29,14 +29,6 @@ else
     delivery="$3"
 fi
 
-
-user_interrupt(){
-    echo -e "\n\nKeyboard Interrupt detected."
-    sleep 2
-    echo -e "${LIGHTRED}You pressed Ctrl + C, your scan could be not complete or corrupted${NOCOLOR}"
-}
-trap user_interrupt SIGINT
-
 while read line; do
     # reading each line
     echo -e "${GREEN}Scanning $line${NOCOLOR}"
