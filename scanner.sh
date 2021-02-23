@@ -13,18 +13,25 @@ delivery="${3:-./}"
 
 echo "Using scheme=$scheme filename=$filename delivery=$3"
 
+docker run --name zap -d -v $(pwd):/zap/wrk/:rw -l zap --entrypoint sleep owasp/zap2docker-stable infinity
 while read line; do
     currentDirectory="$delivery$line/$(date +%Y-%m-%d)"
     echo -e "${GREEN}Scanning $line${NOCOLOR}"
     echo -e "${YELLOW}Creating directory : ${currentDirectory}${NOCOLOR}"
     echo ""
     mkdir -p $currentDirectory
+
+    docker exec -i zap /zap/zap-full-scan.py -m 10 -t $scheme$line  -g generated_file.conf -r shiny_report.html
     pushd $currentDirectory
         chmod 777 -R $delivery
-        docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -m 10 -t $scheme$line  -g generated_file.conf -r shiny_report.html
         echo ""
         echo -e "${YELLOW}The report is located at $(pwd)${NOCOLOR}"
     popd
     echo -e "${LIGHTGREEN}Scan of $scheme$line Complete.${NOCOLOR}"
     echo ""
 done < $filename
+
+echo -e "${LIGHTGREEN}Cleaning up...${NOCOLOR}"
+
+docker stop zap
+docker rm zap
