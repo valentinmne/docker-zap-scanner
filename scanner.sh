@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 NOCOLOR='\033[0m'
 RED='\033[0;31m'
@@ -11,7 +12,7 @@ scheme="${1:-http}://"
 filename="${2:-urls.txt}"
 delivery="${3:-./}"
 
-echo "Using scheme=$scheme filename=$filename delivery=$3"
+echo "Using scheme=$scheme filename=$filename delivery=$delivery"
 
 docker run --name zap -d -v $(pwd):/zap/wrk/:rw -l zap --entrypoint sleep owasp/zap2docker-stable infinity
 while read line; do
