@@ -41,8 +41,8 @@ sudo chmod +x scanner.sh
 Arg Position | Usages | Value by default | In Terminal
 :-|:-|:-|:-|
 1 | choose http or https scan for the url provided | https | ```sudo ./command.sh http ```
-2 | Select the textfile where url are stored | urls.txt | ```sudo ./command.sh http url2.txt ```
-3 | Specify the path to save your scan | /var/www/html  | ```sudo ./command.sh http url2.txt /docker/scanner/```
+2 | Select the textfile where url are stored | urls.txt | ```sudo ./command.sh http url.txt ```
+3 | Specify the path to save your scan | /var/www/html  | ```sudo ./command.sh http url.txt /docker/scanner/```
 
 
 ### Currently implemented
